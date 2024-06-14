@@ -1,9 +1,9 @@
-import bcrypt from "bcrypt"
+import bcryptjs from "bcryptjs"
 import jwt from "jsonwebtoken"
 import User from '../models/user.js';
 
 export const login = async (req, res) => {
-    
+
     try {
         const { email, password } = req.body;
 
@@ -13,7 +13,7 @@ export const login = async (req, res) => {
 
         const user = await User.findOne({ email });
 
-        if (!user || !(await bcrypt.compare(password, user.password))) {
+        if (!user || !(await bcryptjs.compare(password, user.password))) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
@@ -40,7 +40,8 @@ export const register = async (req, res) => {
             return res.status(400).json({ message: 'Email is already registered' });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const saltRounds = 10;
+        const hashedPassword = await bcryptjs.hash(password, saltRounds);
 
         const user = new User({
             name,

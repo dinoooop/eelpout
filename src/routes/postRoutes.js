@@ -6,7 +6,7 @@ import { auth, genVal } from '../middlewares/common.js';
 const router = express.Router();
 const upload = multer();
 
-router.get('/', auth, index);
+router.get('/', index);
 router.post('/', upload.none(), auth, genVal, store);
 router.get('/:id', show);
 router.put('/:id', upload.none(), auth, update);

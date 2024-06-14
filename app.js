@@ -14,9 +14,6 @@ const mongoUri = process.env.MONGODB_URI;
 mongoose.connect(mongoUri)
   .then(() => {
     console.log('Connected to MongoDB');
-    app.listen(port, () => {
-      console.log(`App started to listening at ${port}`);
-    });
   })
   .catch(error => console.error('Could not connect to MongoDB:', error));
 
@@ -26,3 +23,5 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/posts", postRoutes)
 app.use("/api/auth", authRoutes)
+
+export default app;

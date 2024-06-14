@@ -2,7 +2,7 @@ import Post from '../models/post.js';
 
 export const index = async (req, res) => {
   try {
-    const posts = await Post.find({ user: req.userId });
+    const posts = await Post.find();
     res.json(posts);
   } catch (error) {
     res.status(500).send(error.toString());
