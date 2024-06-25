@@ -1,3 +1,4 @@
+import { bc } from '../helpers/bc.js';
 import Post from '../models/post.js';
 
 export const index = async (req, res) => {
@@ -26,15 +27,22 @@ export const show = async (req, res) => {
 };
 
 export const store = async (req, res) => {
+
+  const file = req.file;
+  const url = (file)? await bc.uploadToS3(file) : '';
+  
   try {
     const newPost = new Post({
       title: req.body.title,
       content: req.body.content,
-      user: req.userId
+      user: req.userId,
+      cover: url
     });
+    
     const savedPost = await newPost.save();
     res.status(201).json(savedPost);
   } catch (error) {
+    console.log(error);
     res.status(400).send(error.toString());
   }
 };

@@ -4,10 +4,10 @@ import multer from 'multer';
 import { auth, genVal } from '../middlewares/common.js';
 
 const router = express.Router();
-const upload = multer();
+const upload = multer({ dest: '/tmp/' });
 
 router.get('/', index);
-router.post('/', upload.none(), auth, genVal, store);
+router.post('/', upload.single('cover'), auth, genVal, store);
 router.get('/:id', show);
 router.put('/:id', upload.none(), auth, update);
 router.delete('/:id', auth, destroy);

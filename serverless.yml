@@ -1,4 +1,4 @@
-service: owlet
+service: kiwi
 
 provider:
   name: aws
@@ -18,10 +18,3 @@ functions:
           path: '{proxy+}'
           method: ANY
           cors: true
-
-plugins:
-  - serverless-offline
-
-custom:
-  serverless-offline:
-    httpPort: 8000

@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cors from "cors"
 import postRoutes from './src/routes/postRoutes.js';
 import authRoutes from './src/routes/authRoutes.js';
+import awsServerlessExpressMiddleware from 'aws-serverless-express/middleware.js';
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ mongoose.connect(mongoUri)
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
+app.use(awsServerlessExpressMiddleware.eventContext());
 
 app.use("/api/posts", postRoutes)
 app.use("/api/auth", authRoutes)
